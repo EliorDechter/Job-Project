@@ -45,6 +45,20 @@ bool check_for_wrong_input(vector<string> &products, vector<float> &product_pric
         }
     }
     
+    //hash all the products and check if the names match
+    map<string, float> products_map;
+    
+    for (size_t i = 0; i < products.size(); ++i) {
+        products_map[products[i]] = product_prices[i];
+    }
+    
+    for (size_t i = 0; i < products_sold.size(); ++i) {
+        if (products_map.find(products_sold[i]) == products_map.end()) {
+            fprintf(stderr, "sold product %s does not exists\n", products_sold[i].c_str());
+            error = true;
+        }
+    }
+    
     return error;
 }
 
@@ -73,7 +87,7 @@ int main() {
     vector<float> sold_price { 18.99, 400.89 };
     
     bool wrong_input  = check_for_wrong_input(products, product_prices, products_sold, sold_price);
-    if (!wrong_input)
+    if (wrong_input)
         return 1;
     int result = price_check(products, product_prices, products_sold, sold_price);
     printf("%d\n", result);
