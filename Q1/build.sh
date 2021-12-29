@@ -1,0 +1,1 @@
+g++ PriceCheck.cpp -Wall -o PriceCheck
